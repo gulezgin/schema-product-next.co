@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Information</title>
+</head>
+<body>
+    <h1>Product Information</h1>
+    <div id="productInfo"></div>
+
+    <script>
+        // Get the JSON data
+        var productData = {
+            "@context": "http://schema.org",
+            "@type": "Product",
+            "name": "adidas Blue Terrex Mid Gore-Tex Hiking Boots",
+            "image": "https://xcdn.next.co.uk/COMMON/Items/Default/Default/ItemImages/AltItemThumb/D37700.jpg",
+            "sku": "D37-700",
+            "description": "Splashing through puddles is all part of the fun. When the trails get soggy, these kids' adidas hiking shoes keep their feet dry and comfortable. A waterproof, breathable GORE-TEX membrane repels water. Lightweight EVA cushioning keeps them cruising in comfort. No matter how fast they zoom down the trails, Continental™ Rubber offers extraordinary grip. Made with a series of recycled materials, this upper features at least 50% recycled content. This product represents just one of our solutions to help end plastic waste.",
+            "brand": {
+                "@type": "Brand",
+                "name": "adidas"
+            },
+            "offers": [
+                {
+                    "@type": "Offer",
+                    "priceCurrency": "GBP",
+                    "price": "80",
+                    "itemCondition": "http://schema.org/NewCondition",
+                    "url": "//www.next.co.uk/style/st367391/d37700",
+                    "availability": "http://schema.org/SoldOut",
+                    "sku": "D37-700",
+                    "name": "5.5 EU38.5"
+                },
+                // Other offers here...
+            ],
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": 5.0,
+                "reviewCount": 1
+            },
+            "review": [
+                {
+                    "@type": "Review",
+                    "author": {
+                        "@type": "Person",
+                        "name": "Amy"
+                    },
+                    "datePublished": "2024-05-03T06:32:14.2630000Z",
+                    "description": "I bought these for my 8year old son as I felt he’s a little grown up for wellies and they are great. They are really good quality and he says they are really comfy and feels he can run around in them too. They look cool too. So all round great purchase.",
+                    "name": "adidas Blue Terrex Mid Gore-Tex Hiking Boots",
+                    "reviewRating": {
+                        "@type": "Rating",
+                        "bestRating": 5,
+                        "ratingValue": 5,
+                        "worstRating": 1
+                    }
+                }
+            ]
+        };
+
+        // Create HTML to display product information
+        var productInfoHTML = `
+            <p><strong>Product Name:</strong> ${productData.name}</p>
+            <img src="${productData.image}" alt="${productData.name}">
+            <p><strong>Description:</strong> ${productData.description}</p>
+            <p><strong>Brand:</strong> ${productData.brand.name}</p>
+            <h2>Offers</h2>
+            <ul>
+        `;
+        // Create HTML for each offer
+        productData.offers.forEach(function(offer) {
+            productInfoHTML += `<li>Price: ${offer.price} ${offer.priceCurrency}, Condition: ${offer.availability}, SKU: ${offer.sku}</li>`;
+        });
+        productInfoHTML += '</ul>';
+
+        // Create HTML if there is a product review
+        if (productData.review.length > 0) {
+            productInfoHTML += `
+                <h2>Reviews</h2>
+                <p><strong>Review Count:</strong> ${productData.aggregateRating.reviewCount}</p>
+                <ul>
+                    <li>Author: ${productData.review[0].author.name}</li>
+                    <li>Date: ${productData.review[0].datePublished}</li>
+                    <li>Rating: ${productData.review[0].reviewRating.ratingValue} / ${productData.review[0].reviewRating.bestRating}</li>
+                    <li>Description: ${productData.review[0].description}</li>
+                </ul>
+            `;
+        }
+
+        // Display product information
+        document.getElementById('productInfo').innerHTML = productInfoHTML;
+    </script>
+</body>
+</html>
